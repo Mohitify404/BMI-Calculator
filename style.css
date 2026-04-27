@@ -8,8 +8,17 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    BMI Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    BMI Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
   /* background-color: black; */
 }
 
@@ -28,20 +37,45 @@ html {
 
 .form-container {
   position: relative;
-  height: 550px;
-  width: 50%;
-  max-width: 400px;
-  min-width: 300px;
+  width: min(980px, 92vw);
+  min-height: 550px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px); /* For Safari support */
   background-color: rgba(255, 255, 255, 0.1); /* Change this line */
   z-index: 1;
-  text-align: center;
   padding: 20px;
   border-radius: 40px;
   color: white;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border: 1px solid rgba(225, 225, 225, 0.18);
+}
+.form-container form {
+  height: 100%;
+}
+.form-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.1fr);
+  gap: 20px;
+  height: 100%;
+}
+.input-panel,
+.result-panel {
+  border-radius: 28px;
+  padding: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(225, 225, 225, 0.14);
+}
+.input-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* justify-content: center; */
 }
 .form-container h1 {
   size: 20px;
@@ -66,7 +100,7 @@ form input:focus {
   color: rgb(0, 0, 0);
   margin-top: 50px;
   height: 40px;
-  width: 70%;
+  width: 100%;
   border-radius: 10px;
   border: none;
   backdrop-filter: blur(10px);
@@ -78,9 +112,82 @@ form input:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 15px;
   margin-bottom: 20px;
 }
+
+#shame {
+  margin-top: 10px;
+  max-height: 570px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.recommendation-panel {
+  text-align: left;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.recommendation-panel h3,
+.recommendation-panel h4,
+.healthy-panel h3 {
+  margin-top: 0;
+}
+
+.recommendation-panel ul {
+  padding-left: 18px;
+  margin-bottom: 12px;
+}
+
+.video-grid {
+  display: grid;
+  gap: 12px;
+}
+.lol {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.video-card iframe {
+  width: 100%;
+  min-height: 180px;
+  border: 0;
+  border-radius: 12px;
+}
+
+.healthy-panel {
+  text-align: left;
+}
+
+@media (max-width: 780px) {
+  .form-container {
+    width: min(500px, 92vw);
+  }
+
+  .form-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .input-panel,
+  .result-panel {
+    text-align: center;
+  }
+}
+
 #changeBackground {
   position: absolute;
   top: 20px;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,24 +10,30 @@
     <div class="background-container"></div>
     <div class="form-container">
       <form>
-        <!--normally form refreshes the page, so we will use it as btn -->
-        <h1>BMI Calculator</h1>
-        <h2>height (cms)</h2>
-        <input type="text" class="input" id="height" />
-        <h2>weight (KGs)</h2>
-        <input type="text" class="input" id="weight" />
-        <br />
-        <!-- here type btn changes it to not refresh -->
+        <div class="form-layout">
+          <section class="input-panel">
+            <!--normally form refreshes the page, so we will use it as btn -->
+            <h1>BMI Calculator</h1>
+            <h2>height (cms)</h2>
+            <input type="text" class="input" id="height" />
+            <h2>weight (KGs)</h2>
+            <input type="text" class="input" id="weight" />
+            <br />
+            <!-- here type btn changes it to not refresh -->
 
-        <button id="submit">submit</button>
+            <button id="submit">submit</button>
+          </section>
 
-        <div id="results">
-          <h3>BMI Weight Guide:</h3>
-          <p>Under Weight = Less than 18.6</p>
-          <p>Normal Range = 18.6 and 24.9</p>
-          <p>Overweight = Greater than 24.9</p>
+          <aside class="result-panel">
+            <div id="results">
+              <h3>BMI Weight Guide:</h3>
+              <p>Under Weight = Less than 18.6</p>
+              <p>Normal Range = 18.6 and 24.9</p>
+              <p>Overweight = Greater than 24.9</p>
+            </div>
+            <div id="shame"></div>
+          </aside>
         </div>
-        <p id="shame"></p>
       </form>
     </div>
     <button id="changeBackground"></button>

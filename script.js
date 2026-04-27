@@ -6,6 +6,37 @@ const form = document.querySelector("form"); //! calling the form
 // const background = document.querySelector("#changeBackground"); //! calling the background color change button
 console.log(form);
 
+function buildVideoEmbed(query, label) {
+  const encodedQuery = encodeURIComponent(query);
+  return `
+    <section class="video-card">
+      <h4>${label}</h4>
+      <iframe
+        src="https://www.youtube.com/embed?listType=search&list=${encodedQuery}"
+        title="${label}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </section>
+  `;
+}
+
+function buildPlan(title, summary, items, videoQueries) {
+  const planItems = items.map((item) => `<li>${item}</li>`).join("");
+  const videos = videoQueries
+    .map(({ query, label }) => buildVideoEmbed(query, label))
+    .join("");
+
+  return `
+    <div class="recommendation-panel">
+      <h3>${title}</h3>
+      <p>${summary}</p>
+      <ul>${planItems}</ul>
+      <div class="video-grid">${videos}</div>
+    </div>
+  `;
+}
+
 // added an even listener to the form that gets active when form gets submitted
 //it makes an event "e" => prevent default (prevents the default thing ) ===which is to send the values and reload the page
 form.addEventListener("submit", (e) => {
@@ -19,6 +50,7 @@ form.addEventListener("submit", (e) => {
   if (height === String || height < 0 || height === "" || isNaN(height)) {
     result.innerHTML = "<h4>Please give a valid height</h4>";
     result.style.color = "red";
+    shame.innerHTML = "";
     return; // stop execution here
   } else if (
     weight === String ||
@@ -34,29 +66,26 @@ form.addEventListener("submit", (e) => {
   }
   //!making sure the inputs are valid
   if (height <= 65.24) {
-    result.innerHTML =
-      "<h4>aap to Chandra Bahadur Dangi se bhi chote ho <br> (please give a valid height)</h4>";
+    result.innerHTML = "<h4>(please give a valid height)</h4>";
     result.style.color = "red";
     shame.innerHTML = "";
 
     return;
   } else if (height >= 251) {
-    result.innerHTML =
-      "<h4>oh khali ke chacha batau abhi? <br> (please give a valid height)</h4>";
+    result.innerHTML = "<h4>(please give a valid height)</h4>";
     result.style.color = "red";
     shame.innerHTML = "";
     return;
   }
   if (weight <= 10) {
-    result.innerHTML =
-      "<h4>murgi ka BMI nahi bta sakta?? <br> (please give a valid weight)</h4>";
+    result.innerHTML = "<h4> (please give a valid weight)</h4>";
     result.style.color = "red";
     shame.innerHTML = "";
 
     return;
   } else if (weight >= 635) {
-    result.innerHTML =
-      "<h4>bhai teri gaadi ka BMI nikalna hai? <br> (please give a valid weight)</h4>";
+    result.innerHTML = "<h4>(please give a valid weight)</h4>";
+    result.style.color = "red";
     shame.innerHTML = "";
 
     return;
@@ -65,19 +94,61 @@ form.addEventListener("submit", (e) => {
   //! calculation
   const output = weight / ((height * height) / 10000);
 
-  result.innerHTML = `<h3>Your BMI is <b>${output.toFixed(1)}</b></h3>`; // deleted the whole div
+  result.innerHTML = `<div class="lol"><h3>Your BMI is <b>${output.toFixed(1)}</b></h3></div>`; // deleted the whole div
   result.style.color = "white";
 
   //? personal quotes
   if (output < 18.6) {
-    shame.innerHTML = "you need to eat more <br> (under-weight)";
+    shame.innerHTML = buildPlan(
+      "Weight Gain Plan",
+      "Focus on calorie-dense meals, enough protein, and consistent strength training.",
+      [
+        "Eat 5 to 6 meals a day instead of only 2 or 3 big ones.",
+        "Add calorie-rich foods like peanut butter, nuts, milk, paneer, rice, and bananas.",
+        "Do strength training 3 to 4 times a week to build healthy muscle.",
+        "Sleep at least 7 to 9 hours so your body can recover and grow.",
+      ],
+      [
+        {
+          query: "healthy weight gain workout",
+          label: "Weight gain workout videos",
+        },
+        {
+          query: "high calorie meal prep for weight gain",
+          label: "High calorie meal ideas",
+        },
+      ],
+    );
     return;
   } else if (output >= 18.6 && output <= 24.9) {
-    shame.innerHTML =
-      "waah! ye body aapki asteroid se hai? <br> (normal-weight)";
+    shame.innerHTML = `
+      <div class="recommendation-panel healthy-panel">
+        <h3>You are healthy</h3>
+        <p>Your BMI is in the normal range. Keep doing what you are doing and stay consistent with your food, sleep, and exercise habits.</p>
+      </div>
+    `;
     return;
   } else if (output > 24.9) {
-    shame.innerHTML = "aap thode jada healthy ho!! <br> (obese)";
+    shame.innerHTML = buildPlan(
+      "Fat Loss Plan",
+      "Focus on a calorie deficit, regular movement, and meals that keep you full without overeating.",
+      [
+        "Walk 30 to 45 minutes most days of the week.",
+        "Build meals around protein, vegetables, and high-fiber foods.",
+        "Reduce sugary drinks, fried snacks, and late-night overeating.",
+        "Add strength training 3 times a week to protect muscle while losing fat.",
+      ],
+      [
+        {
+          query: "beginner fat loss workout",
+          label: "Fat loss workout videos",
+        },
+        {
+          query: "healthy meal prep for weight loss",
+          label: "Healthy meal prep ideas",
+        },
+      ],
+    );
     return;
   }
 
@@ -93,7 +164,7 @@ changeButton.addEventListener("click", (e) => {
 
   wallppr.setAttribute(
     "style",
-    `background-image: url(wallpapers/${wallpaper[randomIndex]});`
+    `background-image: url(wallpapers/${wallpaper[randomIndex]});`,
   );
 });
 
