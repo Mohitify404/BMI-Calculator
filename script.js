@@ -4,15 +4,14 @@ const form = document.querySelector("form"); //! calling the form
 // const weight = document.querySelector("#weight"); //! calling the input field of weight
 // const submit = document.querySelector("#submit"); //! calling the submit button
 // const background = document.querySelector("#changeBackground"); //! calling the background color change button
-console.log(form);
+// console.log(form);
 
-function buildVideoEmbed(query, label) {
-  const encodedQuery = encodeURIComponent(query);
+function buildVideoEmbed(videoId, label) {
   return `
     <section class="video-card">
       <h4>${label}</h4>
       <iframe
-        src="https://www.youtube.com/embed?listType=search&list=${encodedQuery}"
+        src="https://www.youtube.com/embed/${videoId}"
         title="${label}"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
@@ -21,10 +20,10 @@ function buildVideoEmbed(query, label) {
   `;
 }
 
-function buildPlan(title, summary, items, videoQueries) {
+function buildPlan(title, summary, items, videoList) {
   const planItems = items.map((item) => `<li>${item}</li>`).join("");
-  const videos = videoQueries
-    .map(({ query, label }) => buildVideoEmbed(query, label))
+  const videos = videoList
+    .map(({ videoId, label }) => buildVideoEmbed(videoId, label))
     .join("");
 
   return `
@@ -110,11 +109,11 @@ form.addEventListener("submit", (e) => {
       ],
       [
         {
-          query: "healthy weight gain workout",
+          videoId: "nAgZBJ9C3AI", // Example ID, you can replace with your preferred video ID
           label: "Weight gain workout videos",
         },
         {
-          query: "high calorie meal prep for weight gain",
+          videoId: "KOcyirXd0Zc",
           label: "High calorie meal ideas",
         },
       ],
@@ -140,11 +139,11 @@ form.addEventListener("submit", (e) => {
       ],
       [
         {
-          query: "beginner fat loss workout",
+          videoId: "yWnacRo2VbA", // Example ID, you can replace with your preferred video ID
           label: "Fat loss workout videos",
         },
         {
-          query: "healthy meal prep for weight loss",
+          videoId: "six49dFYVYg", // Example ID, you can replace with your preferred video ID
           label: "Healthy meal prep ideas",
         },
       ],
